@@ -51,6 +51,7 @@ const Signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             password: passwordHashed,
         });
         req.session.userId = newUser._id;
+        res.setHeader('Set-Cookie', `connect.sid=${req.session.userId}; Path=/; HttpOnly; Secure; SameSite=None`);
         res.status(201).json(newUser);
     }
     catch (error) {
@@ -78,6 +79,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             throw (0, http_errors_1.default)(401, "wrong password");
         }
         req.session.userId = user._id;
+        res.setHeader('Set-Cookie', `connect.sid=${req.session.userId}; Path=/; HttpOnly; Secure; SameSite=None`);
         res.status(201).json(user);
     }
     catch (error) {

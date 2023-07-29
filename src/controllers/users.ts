@@ -51,6 +51,7 @@ export const Signup: RequestHandler<
       password: passwordHashed,
     });
     req.session.userId = newUser._id;
+    res.setHeader('Set-Cookie', `connect.sid=${req.session.userId}; Path=/; HttpOnly; Secure; SameSite=None`);
     res.status(201).json(newUser);
   } catch (error) {
     next(error);
@@ -92,6 +93,7 @@ export const login: RequestHandler<
     }
 
     req.session.userId = user._id;
+    res.setHeader('Set-Cookie', `connect.sid=${req.session.userId}; Path=/; HttpOnly; Secure; SameSite=None`);
     res.status(201).json(user);
   } catch (error) {
     next(error);
