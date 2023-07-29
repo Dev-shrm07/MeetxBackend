@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "build/server.js",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "start": "node build/server.js",
