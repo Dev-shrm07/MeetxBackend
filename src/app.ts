@@ -8,11 +8,14 @@ import createHttpError, {isHttpError} from "http-errors"
 import session from "express-session"
 import env from './utils/validateEnv'
 import MongoStore from "connect-mongo";
+import cors from "cors"
 const app = express();
+
 
 app.use(morgan("dev"))
 
 app.use(express.json())
+app.use(cors())
 
 app.use(session({
   secret: env.SESSION_SECRET,
