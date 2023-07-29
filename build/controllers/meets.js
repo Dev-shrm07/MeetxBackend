@@ -22,6 +22,7 @@ const getMeet = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     try {
         (0, assertIsDefined_1.assertIsDefined)(authuserid);
         const meet = yield meet_1.default.find({ user: authuserid }).exec();
+        req.session.save();
         res.status(200).json(meet);
     }
     catch (error) {
@@ -45,6 +46,7 @@ const getMeetbyID = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         if (!meet.user.equals(authuserid)) {
             throw (0, http_errors_1.default)(401, "you are not allowed to acces the notes");
         }
+        req.session.save();
         res.status(200).json(meet);
     }
     catch (error) {
@@ -72,6 +74,7 @@ const createMeet = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             desc: desc,
             link: link,
         });
+        req.session.save();
         res.status(201).json(newMeet);
     }
     catch (error) {
@@ -109,6 +112,7 @@ const updateMeet = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         meet.desc = desc;
         meet.link = link;
         const updatemeet = yield meet.save();
+        req.session.save();
         res.status(200).json(updatemeet);
     }
     catch (error) {

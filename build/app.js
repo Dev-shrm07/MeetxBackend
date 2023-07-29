@@ -38,12 +38,9 @@ const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
 const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.set("trust proxy", 1);
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
 app.use((0, express_session_1.default)({
     secret: validateEnv_1.default.SESSION_SECRET,
     resave: false,
@@ -56,11 +53,13 @@ app.use((0, express_session_1.default)({
         mongoUrl: validateEnv_1.default.MONGO_CONNECTION_STRING
     }),
 }));
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 app.use('/api/users', user_1.default);
 app.use("/api/meets", auth_1.requireAuth, meets_1.default);
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
     next((0, http_errors_1.default)(404, "Not found"));
 });
 app.use((error, req, res, next) => {
