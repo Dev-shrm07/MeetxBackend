@@ -16,6 +16,11 @@ app.use(morgan("dev"))
 
 app.use(express.json())
 
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}))
+
 app.use(session({
   secret: env.SESSION_SECRET,
   resave: false,
@@ -28,10 +33,7 @@ app.use(session({
     mongoUrl: env.MONGO_CONNECTION_STRING
   }),
 }))
-app.use(cors({
-  origin:'http://localhost:3000',
-  credentials:true
-}))
+
 
 app.use('/api/users', userRoute)
 

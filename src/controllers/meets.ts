@@ -9,7 +9,6 @@ export const getMeet: RequestHandler = async (req, res, next) => {
   try {
     assertIsDefined(authuserid)
     const meet = await MeetModel.find({user: authuserid}).exec();
-    req.session.save()
     res.status(200).json(meet);
   } catch (error) {
     next(error);
@@ -32,7 +31,6 @@ export const getMeetbyID: RequestHandler = async (req, res, next) => {
     if(!meet.user.equals(authuserid)){
       throw createHttpError(401, "you are not allowed to acces the notes")
     }
-    req.session.save()
     res.status(200).json(meet);
   } catch (error) {
     next(error);
@@ -72,7 +70,6 @@ export const createMeet: RequestHandler<
       desc: desc,
       link: link,
     });
-    req.session.save()
     res.status(201).json(newMeet);
   } catch (error) {
     next(error);
@@ -129,7 +126,6 @@ export const updateMeet: RequestHandler<
     meet.link = link;
 
     const updatemeet = await meet.save();
-    req.session.save()
     res.status(200).json(updatemeet);
   } catch (error) {
     next(error);

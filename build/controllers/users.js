@@ -19,11 +19,6 @@ const password_hash_1 = __importDefault(require("password-hash"));
 const getauthenticatedUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield user_1.default.findById(req.session.userId).select('email username').exec();
-        req.session.save((err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
         res.status(200).json(user);
     }
     catch (error) {
@@ -56,11 +51,6 @@ const Signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             password: passwordHashed,
         });
         req.session.userId = newUser._id;
-        req.session.save((err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
         res.status(201).json(newUser);
     }
     catch (error) {
@@ -88,11 +78,6 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             throw (0, http_errors_1.default)(401, "wrong password");
         }
         req.session.userId = user._id;
-        req.session.save((err) => {
-            if (err) {
-                console.log(err);
-            }
-        });
         res.status(201).json(user);
     }
     catch (error) {

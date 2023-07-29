@@ -8,11 +8,6 @@ export const getauthenticatedUser: RequestHandler = async (req, res, next) => {
   try {
     
     const user = await UserModel.findById(req.session.userId).select('email username').exec();
-    req.session.save((err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
     res.status(200).json(user);
   } catch (error) {
     next(error);
@@ -56,11 +51,7 @@ export const Signup: RequestHandler<
       password: passwordHashed,
     });
     req.session.userId = newUser._id;
-    req.session.save((err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    
     res.status(201).json(newUser);
   } catch (error) {
     next(error);
@@ -102,11 +93,7 @@ export const login: RequestHandler<
     }
 
     req.session.userId = user._id;
-    req.session.save((err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    
     res.status(201).json(user);
   } catch (error) {
     next(error);
