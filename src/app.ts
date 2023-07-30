@@ -28,7 +28,7 @@ app.use(session({
   }),
 }))
 app.use(cors({
-  origin:['http://localhost:3000','https://meetxksh.netlify.app/'],
+  origin:['http://localhost:3000','https://meetxksh.netlify.app'],
   credentials: true
 }))
 app.use(morgan("dev"))
