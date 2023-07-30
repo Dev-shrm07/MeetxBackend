@@ -9,6 +9,7 @@ export const getMeet: RequestHandler = async (req, res, next) => {
   try {
     assertIsDefined(authuserid)
     const meet = await MeetModel.find({user: authuserid}).exec();
+    
     res.status(200).json(meet);
   } catch (error) {
     next(error);
@@ -31,6 +32,7 @@ export const getMeetbyID: RequestHandler = async (req, res, next) => {
     if(!meet.user.equals(authuserid)){
       throw createHttpError(401, "you are not allowed to acces the notes")
     }
+    
     res.status(200).json(meet);
   } catch (error) {
     next(error);

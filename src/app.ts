@@ -17,7 +17,7 @@ app.use(morgan("dev"))
 app.use(express.json())
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "*",
   credentials: true
 }))
 
@@ -26,7 +26,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie:{
-    maxAge: 60*60*1000
+    maxAge: 60*60*1000,
+    secure: true,
+    httpOnly: true
   },
   rolling: true,
   store: MongoStore.create({

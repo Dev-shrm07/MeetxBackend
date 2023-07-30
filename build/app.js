@@ -42,7 +42,7 @@ app.set("trust proxy", 1);
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: "http://localhost:3000",
+    origin: "*",
     credentials: true
 }));
 app.use((0, express_session_1.default)({
@@ -50,7 +50,9 @@ app.use((0, express_session_1.default)({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60 * 60 * 1000
+        maxAge: 60 * 60 * 1000,
+        secure: true,
+        httpOnly: true
     },
     rolling: true,
     store: connect_mongo_1.default.create({
