@@ -12,15 +12,6 @@ import cors from "cors"
 const app = express();
 
 app.set("trust proxy", 1)
-app.use(morgan("dev"))
-
-app.use(express.json())
-
-app.use(cors({
-  origin: "*",
-  credentials: true
-}))
-
 app.use(session({
   secret: env.SESSION_SECRET,
   resave: false,
@@ -28,13 +19,23 @@ app.use(session({
   cookie:{
     maxAge: 60*60*1000,
     secure: true,
-    httpOnly: true
+    httpOnly: false,
+    sameSite:"none"
   },
   rolling: true,
   store: MongoStore.create({
     mongoUrl: env.MONGO_CONNECTION_STRING
   }),
 }))
+app.use(cors({
+  origin: "*",
+  credentials: true
+}))
+app.use(morgan("dev"))
+
+app.use(express.json())
+
+
 
 
 app.use('/api/users', userRoute)
